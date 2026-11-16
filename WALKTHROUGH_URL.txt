@@ -1,0 +1,34 @@
+# CollabSpace Walkthrough Video
+
+Walkthrough Video URL:
+https://www.loom.com/share/YOUR_RECORDING_ID_HERE
+(Replace this URL with your uploaded Loom, YouTube, or Google Drive video link)
+
+--------------------------------------------------------------------------------
+Suggested 3-Minute Video Script / Walkthrough Outline:
+--------------------------------------------------------------------------------
+1. Introduction (0:00 - 0:30):
+   - "Hi! This is CollabSpace, a lightweight Google Docs alternative built with Next.js 14 App Router, TypeScript, Tailwind CSS, TipTap, and Supabase PostgreSQL with Row Level Security."
+   - Show the modern SaaS dashboard with separated 'My Documents' and 'Shared with Me' tabs.
+
+2. Document Creation & Rich Text Editing (0:30 - 1:15):
+   - Click "New Document".
+   - Demonstrate the TipTap editor: Heading 1, bold, bulleted list, blockquote.
+   - Show the debounced auto-save behavior and the status pill ("Unsaved" -> "Saving..." -> "Saved").
+   - Edit the document title inline in the header.
+
+3. File Import (.md / .txt) (1:15 - 1:45):
+   - Return to the dashboard and click "Import (.txt / .md)".
+   - Select or drag-and-drop a sample markdown or text file.
+   - Show that validation checks file size and format, and instantly parses headers/lists into a new document.
+
+4. Collaboration & Permissions (1:45 - 2:30):
+   - Click "Share" on an owned document.
+   - Invite a collaborator with Editor or Viewer permissions.
+   - Switch users using the top Role Switcher to Sarah Jenkins (Editor) to show edit permissions.
+   - Switch to David Chen (Viewer) to demonstrate read-only enforcement (banner, locked canvas, disabled toolbar).
+
+5. Architecture & Testing (2:30 - 3:00):
+   - Briefly highlight the Supabase PostgreSQL schema with RLS policies in `supabase/schema.sql`.
+   - Show terminal running `npm run test` with 12 passing Vitest unit tests.
+   - Conclude.

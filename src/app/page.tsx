@@ -1,101 +1,99 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import React from 'react';
+import { Navbar } from '@/components/ui/Navbar';
+import { DocumentList } from '@/components/dashboard/DocumentList';
+import { useAuth } from '@/lib/context/AuthContext';
+import { FileText, Sparkles, ShieldCheck, ArrowRight, Loader2 } from 'lucide-react';
+import Link from 'next/link';
+
+export default function HomePage() {
+  const { user, loading, switchUser } = useAuth();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen flex flex-col bg-slate-50">
+      <Navbar />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-24 text-slate-400">
+            <Loader2 className="w-8 h-8 animate-spin text-blue-600 mb-3" />
+            <p className="text-xs">Initializing workspace...</p>
+          </div>
+        ) : user ? (
+          <DocumentList />
+        ) : (
+          /* Unauthenticated Landing / Demo Entry */
+          <div className="max-w-3xl mx-auto py-16 text-center">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-6">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Production-Grade Document Collaboration MVP</span>
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+              Collaborative documents, <br className="hidden sm:inline" />
+              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                simplified & secure.
+              </span>
+            </h1>
+
+            <p className="text-base text-slate-600 max-w-xl mx-auto mb-8">
+              Create, edit with rich text formatting, import Markdown/TXT files, and share with fine-grained Viewer and Editor permissions.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
+              <button
+                type="button"
+                onClick={() => switchUser('alex')}
+                className="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-lg shadow-blue-500/25 transition-all flex items-center justify-center gap-2"
+              >
+                <span>Launch Demo as Alex (Owner)</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <Link
+                href="/auth"
+                className="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl shadow-sm transition-all"
+              >
+                Sign In with Supabase Auth
+              </Link>
+            </div>
+
+            {/* Feature Highlights Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left border-t border-slate-200 pt-10">
+              <div className="p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs">
+                <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center mb-2.5">
+                  <FileText className="w-4 h-4" />
+                </div>
+                <h4 className="text-sm font-semibold text-slate-900">TipTap Rich Text</h4>
+                <p className="text-xs text-slate-500 mt-1">
+                  Headings, bold, italic, underline, lists, code blocks, and 1s debounced auto-saving.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs">
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center mb-2.5">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <h4 className="text-sm font-semibold text-slate-900">Access Roles</h4>
+                <p className="text-xs text-slate-500 mt-1">
+                  Owner, Editor, and Viewer permissions enforced at the UI and PostgreSQL RLS levels.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs">
+                <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2.5">
+                  <Sparkles className="w-4 h-4" />
+                </div>
+                <h4 className="text-sm font-semibold text-slate-900">File Importer</h4>
+                <p className="text-xs text-slate-500 mt-1">
+                  Upload .md and .txt files with instant client-side validation and structure conversion.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
